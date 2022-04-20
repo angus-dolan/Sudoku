@@ -1,7 +1,9 @@
 #pragma once
 
+// Views
 #include "HomeView.h"
 #include "ExitView.h"
+#include "InstructionsView.h"
 
 class ViewRouter
 {
@@ -11,5 +13,6 @@ class ViewRouter
 
 		HomeView* homeView;
 		ExitView* exitView;
+		InstructionsView* instructionsView;
 };
 
