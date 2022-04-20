@@ -1,11 +1,9 @@
-#include <stdlib.h>
 #include <iostream>
 #include <conio.h>
 #include <string>
 #include <windows.h>
 
 #include "HomeView.h"
-#include "hideCursor.h"
 #include "color.h"
 #include "uiElements.h"
 
@@ -21,19 +19,12 @@ HomeView::~HomeView()
 
 void HomeView::display()
 {
-	hideCursor(true); // Hide cursor in console
-
 	while (true)
 	{
 		system("cls");
 
 		// Header
-		color(5); // purple
-		ui::lineSmallLeft();
-		color(15); // white
-		std::cout << "SUDOKU";
-		color(5); // purple
-		ui::lineSmallRight();
+		ui::header();
 
 		// (1): Start Game
 		color(7); // dark white
@@ -54,11 +45,7 @@ void HomeView::display()
 		std::cout << "EXIT" << std::endl;
 
 		// Footer 
-		color(5); // purple
-		ui::seperator();
-		color(7); // dark white
-		std::cout << "(Select your choice) ";
-		color(15); // white
+		ui::footerText("(Select your choice) ");
 
 		char selection = _getch();
 		if (!(selection < '1' || selection > '3')) {
