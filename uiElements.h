@@ -1,7 +1,14 @@
 #pragma once
 
+#include <string>
+
 class ui {
 	public:
+		// Compound Elements 
+		static void header();
+		static void footerText(std::string label);
+
+		// Atomic Elements
 		static void lineSmallLeft();
 		static void lineSmallRight();
 		static void seperator();
