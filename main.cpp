@@ -1,19 +1,17 @@
 #include <string>
 #include <iostream>
 
+#include "ViewRouter.h"
 #include "HomeView.h"
 
 using namespace std;
 
 int main()
 {
-	// Declare Views
-	HomeView* homeView = new HomeView();
+	ViewRouter* router = new ViewRouter();
 
-	//
-	homeView->display();
-
-	system("cls");
-	/*int& choice = homeView->getChoice();*/
-	std::cout << homeView->getChoice() << std::endl;
+	// Main Menu
+	// 1 = Start Game, 2 = Read Instructions, 3 = Exit Game 
+	router->homeView->display();
+	if (router->homeView->getChoice() == 1) {}
 }
