@@ -47,10 +47,10 @@ void HomeView::display()
 		// Footer 
 		ui::footerText("(Select your choice) ");
 
+		// Handle user input
 		char selection = _getch();
 		if (!(selection < '1' || selection > '3')) {
 			int selection_int = (int)((char)selection - '0');
-			int* selection_int_ptr = &selection_int;
 
 			setChoice(selection_int);
 			break;
