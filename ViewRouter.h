@@ -1,6 +1,7 @@
 #pragma once
 
 #include "HomeView.h"
+#include "ExitView.h"
 
 class ViewRouter
 {
