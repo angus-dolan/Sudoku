@@ -40,7 +40,6 @@ void HomeView::display()
 		std::cout << "[1] ";
 		color(10); // green
 		std::cout << "START GAME" << std::endl;
-		
 
 		// (2): Read Instructions
 		color(7); // white
