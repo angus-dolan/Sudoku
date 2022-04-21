@@ -30,13 +30,13 @@ void HomeView::display()
 		color(7); // dark white
 		std::cout << "[1] ";
 		color(10); // green
-		std::cout << "START GAME" << std::endl;
+		std::cout << "START NEW GAME" << std::endl;
 
-		// (2): Read Instructions
+		// (2): Load Saved Game
 		color(7); // white
 		std::cout<<"[2] ";
 		color(11); // light blue
-		std::cout << "INSTRUCTIONS" << std::endl;
+		std::cout << "LOAD SAVED GAME" << std::endl;
 
 		// (3): Exit Game
 		color(7); // dark white
