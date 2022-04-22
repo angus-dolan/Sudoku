@@ -3,7 +3,8 @@
 // Views
 #include "HomeView.h"
 #include "ExitView.h"
-#include "InstructionsView.h"
+#include "LoadGameView.h"
+#include "GameView.h"
 
 class ViewRouter
 {
@@ -13,6 +14,7 @@ class ViewRouter
 
 		HomeView* homeView;
 		ExitView* exitView;
-		InstructionsView* instructionsView;
+		LoadGameView* loadGameView;
+		GameView* gameView;
 };
 

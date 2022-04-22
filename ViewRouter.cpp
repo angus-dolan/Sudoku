@@ -3,13 +3,15 @@
 // Views
 #include "HomeView.h"
 #include "ExitView.h"
-#include "InstructionsView.h"
+#include "LoadGameView.h"
+#include "GameView.h"
 
 ViewRouter::ViewRouter()
 {
 	homeView = new HomeView();
 	exitView = new ExitView();
-	instructionsView = new InstructionsView();
+	loadGameView = new LoadGameView();
+	gameView = new GameView();
 }
 
 ViewRouter::~ViewRouter()
@@ -17,6 +19,7 @@ ViewRouter::~ViewRouter()
 	delete& 
 		homeView, 
 		exitView,
-		instructionsView
+		loadGameView,
+		gameView
 	;
 }
