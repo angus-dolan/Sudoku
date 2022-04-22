@@ -11,6 +11,7 @@ void ui::header() {
 	std::cout << "SUDOKU";
 	color(5); // purple
 	ui::lineSmallRight();
+	color(15); // white
 }
 
 void ui::footerText(std::string label) {
@@ -35,21 +36,31 @@ void ui::seperator() {
 }
 
 void ui::sudokuOuterBorder() {
-	std::cout << " $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << std::endl;
+	color(5); // purple
+	std::cout << " |||||||||||||||||||||||||||||||||||||" << std::endl;
+	color(15); // white
 }
 
 void ui::sudokuOuterVerticalBorderSmall() {
-	std::cout << " $ ";
+	color(5); // purple
+	std::cout << " | ";
+	color(15); // white
 }
 
 void ui::sudokuOuterVerticalBorderNextLine() {
-	std::cout << " $" << std::endl;
+	color(5); // purple
+	std::cout << " |" << std::endl;
+	color(15); // white
 }
 
 void ui::sudokuInnerVerticalBorderSmall() {
+	color(5); // purple
 	std::cout << " | ";
+	color(15); // white
 }
 
 void ui::sudokuInnerBorder() {
-	std::cout << " $---*---*---$---*---*---$---*---*---$" << std::endl;
+	color(5); // purple
+	std::cout << " |-----------|---*---*---|---*---*---|" << std::endl;
+	color(15); // white
 }
