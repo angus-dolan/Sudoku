@@ -1,11 +1,4 @@
-#include <iostream>
-#include <conio.h>
-#include <string>
-#include <windows.h>
-
 #include "HomeView.h"
-#include "color.h"
-#include "uiElements.h"
 
 HomeView::HomeView()
 {

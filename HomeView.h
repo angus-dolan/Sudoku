@@ -1,4 +1,13 @@
 #pragma once
+
+#include <iostream>
+#include <conio.h>
+#include <string>
+#include <windows.h>
+
+#include "uiElements.h"
+#include "color.h"
+
 class HomeView
 {
 	private:
