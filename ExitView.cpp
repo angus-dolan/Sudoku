@@ -25,6 +25,7 @@ int ExitView::display()
 		ui::header();
 
 		// Text
+		color(5); // purple
 		std::cout << "" << std::endl;
 		std::cout << std::setw(28) << std::right << "ARE YOU SURE YOU WISH TO EXIT?" << std::endl;
 		std::cout << "" << std::endl;
