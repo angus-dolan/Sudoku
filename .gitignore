@@ -36,6 +36,7 @@ bin/
 obj/
 Debug/
 .vs/
+enc_temp_folder
 
 # VS Specific
 Sudoku.vcxproj
