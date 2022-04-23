@@ -1,8 +1,47 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include <numeric>
 
 #include "sudokuSolver.h"
+
+bool checkBoard(std::vector<std::vector<int>>& board)
+{
+    // Rows
+    for (int row = 0; row < N; row++) {
+        if (std::accumulate(board[row].begin(), board[row].end(), 0) != 45) return false;
+    }
+
+    // Columns
+    for (int col = 0; col < N; col++) {
+        int sum = 0;
+        for (int row = 0; row < N; row++) {
+            sum = sum + board[row][col];
+        }
+
+        if (sum != 45) return false;
+    }
+
+    // Boxes
+    int gridStartCol = 0;
+    for (int row = 0; row < 3; row++) {
+        int boxStartCol = 0;
+        int boxEndCol = 3;
+        for (int gridCol = 0; gridCol < 3; gridCol++) {
+            int sumBoxRow1 = std::accumulate(board[gridStartCol].begin() + boxStartCol, board[gridStartCol].begin() + boxEndCol, 0);
+            int sumBoxRow2 = std::accumulate(board[gridStartCol + 1].begin() + boxStartCol, board[gridStartCol + 1].begin() + boxEndCol, 0);
+            int sumBoxRow3 = std::accumulate(board[gridStartCol + 2].begin() + boxStartCol, board[gridStartCol + 2].begin() + boxEndCol, 0);
+            
+            if (sumBoxRow1 + sumBoxRow2 + sumBoxRow3 != 45) return false;
+
+            boxStartCol = boxStartCol + 3;
+            boxEndCol = boxEndCol + 3;
+        }
+        gridStartCol = gridStartCol + 3;
+    }
+
+    return true;
+}
 
 bool solveBackTrack(std::vector<std::vector<int>>& board)
 {

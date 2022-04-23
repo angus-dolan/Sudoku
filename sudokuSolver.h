@@ -8,6 +8,9 @@
 // N defines the grid size, e.g. NxN
 #define N 9
 
+// Checks complete board, returns true||false 
+bool checkBoard(std::vector<std::vector<int>>& board);
+
 // Entry point for back tracking algorithm
 // Uses generative recursion to fill in board
 bool solveBackTrack(std::vector<std::vector<int>>& board);
