@@ -35,8 +35,17 @@ void GameView::display()
 	do {
 		system("cls");
 
-		// Header
-		ui::header();
+		// Difficulty banner
+		switch (diff) {
+		case 1:
+			ui::headerText(" EASY ");
+			break;
+		case 2:
+			ui::headerText("MEDIUM");
+			break;
+		default:
+			ui::headerText(" HARD ");
+		}	
 		std::cout << std::endl;
 
 		// Print game board

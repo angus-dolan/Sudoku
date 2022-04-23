@@ -13,6 +13,15 @@ void ui::header() {
 	ui::lineSmallRight();
 	color(15); // white
 }
+void ui::headerText(std::string label) {
+	color(5); // purple
+	ui::lineSmallLeft();
+	color(15); // white
+	std::cout << label;
+	color(5); // purple
+	ui::lineSmallRight();
+	color(15); // white
+}
 
 void ui::footerText(std::string label) {
 	color(5); // purple

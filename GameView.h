@@ -2,6 +2,7 @@
 #include <vector>
 #include <array>
 #include <conio.h>
+#include <iomanip>
 
 #include "uiElements.h"
 #include "sudokuGenerator.h"

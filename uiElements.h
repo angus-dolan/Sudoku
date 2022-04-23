@@ -6,6 +6,7 @@ class ui {
 	public:
 		// Compound Elements 
 		static void header();
+		static void headerText(std::string label);
 		static void footerText(std::string label);
 
 		// Atomic Elements
