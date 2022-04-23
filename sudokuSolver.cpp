@@ -1,8 +1,3 @@
-#include <iostream>
-#include <vector>
-#include <array>
-#include <numeric>
-
 #include "sudokuSolver.h"
 
 bool checkBoard(std::vector<std::vector<int>>& board)

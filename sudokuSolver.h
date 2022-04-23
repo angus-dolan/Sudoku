@@ -1,6 +1,9 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
+#include <array>
+#include <numeric>
 
 // UNASSIGNED defines the marker for an empty cell in sudoku grid
 #define UNASSIGNED 0

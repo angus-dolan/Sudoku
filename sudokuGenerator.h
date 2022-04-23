@@ -3,6 +3,10 @@
 #include <string>
 #include <vector>
 #include <array>
+#include <iostream>
+#include <algorithm>
+#include <map>
+#include <numeric>
 
 #include "sudokuSolver.h"
 

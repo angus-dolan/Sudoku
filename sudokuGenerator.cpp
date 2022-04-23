@@ -1,10 +1,5 @@
 #include "sudokuGenerator.h"
 
-#include <iostream>
-#include <algorithm>
-#include <map>
-#include <numeric>
-
 SudokuGenerator::SudokuGenerator(int& Difficulty)
 {
 	difficulty = Difficulty;
