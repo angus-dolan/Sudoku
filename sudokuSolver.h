@@ -20,6 +20,8 @@ bool solveBackTrack(std::vector<std::vector<int>>& board);
 
 // Helper function to convert flat array to vector to be used in algorithm
 std::vector<std::vector<int>> flatBoardToVector(std::array<int, 81> const flat_board);
+// Helper function to convert vector board to flat array
+std::vector<int> vectorToFlatBoard(std::vector<std::vector<int>> const vectorBoard);
 
 // Finds the first empty column in board, 0 in a column denotes an empty column
 bool findFirstEmpty(std::vector<std::vector<int>> board, int& row, int& col);

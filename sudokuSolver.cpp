@@ -86,6 +86,19 @@ std::vector<std::vector<int>> flatBoardToVector(std::array<int, 81> const flat_b
     return board;
 }
 
+std::vector<int> vectorToFlatBoard(std::vector<std::vector<int>> const vectorBoard)
+{
+    std::vector<int> flatBoard;
+    for (std::size_t row = 0; row < 9; ++row)
+    {
+        for (std::size_t col = 0; col < 9; ++col)
+        {
+            flatBoard.push_back(vectorBoard[row][col]);
+        }
+    }
+    return flatBoard;
+}
+
 bool findFirstEmpty(std::vector<std::vector<int>> board, int& row, int& col)
 {
     for (row = 0; row < N; row++)
