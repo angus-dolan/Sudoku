@@ -8,6 +8,7 @@
 #include "sudokuGenerator.h"
 #include "sudokuSolver.h"
 #include "color.h"
+#include "gameState.h"
 
 #pragma once
 class GameView
@@ -23,6 +24,6 @@ class GameView
 		void A(int*);
 		void S(int*);
 		void D(int*);
-		void EnterNumber(int*);
+		bool EnterNumber(std::vector<std::vector<int>>* boardPtr, std::vector<int>& flatHint, int& cursor, int& key);
 };
 

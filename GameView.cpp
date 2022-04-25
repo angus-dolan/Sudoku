@@ -25,15 +25,27 @@ void GameView::display()
 	// Hint = what's initially displayed to user
 	// Difficultly is dictated by how many cells are filled in
 	hint = generator->createHint(complete);
+	std::vector<int> flatHint = vectorToFlatBoard(hint);
 
 	// Board = what user plays with, initialized with hint state
 	board = hint;
+	std::vector<std::vector<int>>* boardPtr = &board;
+
+	// Game state
+	struct Node* gameState = NULL;
+	int move = 1;
 
 	// Display UI and look for keyboard input
 	int cursor = 0; // used to track cursor position on board
 	int* cursorPtr = &cursor;
 	do {
 		system("cls");
+
+		std::cout << "Game State: " << std::endl;
+		displayList(gameState);
+		std::cout << "" << std::endl;
+		std::cout << "Move ";
+		std::cout << move << std::endl;
 
 		// Difficulty banner
 		switch (diff) {
@@ -129,8 +141,27 @@ void GameView::display()
 		else if (key == 100 || key == 68) D(cursorPtr);
 
 		// Numbers 1-9
-		if (key >= 49 && key <= 57) EnterNumber(cursorPtr);
+		if (key >= 49 && key <= 57) {
+			bool result = EnterNumber(boardPtr, flatHint, cursor, key);
+			if (result) { 
+				insert(&gameState, move);
+				
+				move++;
+			}
+		}
 
+		// Arrow keys
+		if (key == 224) {
+			key = 256 + _getch();
+			// Undo [arrow-left]
+			if (key == 331 && move > 1) {
+				move--;
+			}
+			// Redo [arrow-right]
+			if (key == 333) {
+
+			}
+		}
 	} while (true);
 }
 
@@ -172,7 +203,37 @@ void GameView::D(int* cursorPtr)
 	if (ValidWASD(cursor)) *cursorPtr = cursor;
 }
 
-void GameView::EnterNumber(int* cursorPointer)
+bool GameView::EnterNumber(std::vector<std::vector<int>>* boardPtr, std::vector<int>& flatHint, int& cursor, int& key)
 {
-	
+	bool flag = false;
+
+	// Check cell is NOT a hint
+	if (flatHint[cursor] == 0)
+	{
+		// Determine number entered
+		int num = 0;
+		if (key == 49) num = 1; // [1]
+		else if (key == 50) num = 2; // [2]
+		else if (key == 51) num = 3; // [3] 
+		else if (key == 52) num = 4; // [4]
+		else if (key == 53) num = 5; // [5]
+		else if (key == 54) num = 6; // [6]
+		else if (key == 55) num = 7; // [7]
+		else if (key == 56) num = 8; // [8]
+		else if (key == 57) num = 9; // [9]
+
+		// Place number into cell
+		int i = 0;
+		for (int row = 0; row < 9; row++) {
+			for (int col = 0; col < 9; col++) {
+				if (i == cursor && (*boardPtr).at(row).at(col) == 0) {
+					(*boardPtr).at(row).at(col) = num;
+					flag = true;
+				}
+				i++;
+			}
+		}
+	}
+
+	return flag;
 }
