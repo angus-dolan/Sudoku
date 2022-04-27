@@ -5,9 +5,10 @@
 using namespace std;
 
 // Update game state
-void insert(struct Node** head, int move) 
+void insert(struct Node** head, int move, std::vector<std::vector<int>>& newData)
 {
 	struct Node* newNode = new Node;
+	newNode->data = newData;
 	newNode->move = move;
 	newNode->next = NULL;
 
@@ -64,6 +65,29 @@ void insert(struct Node** head, int move)
 			}
 		}
 	}
+}
+
+std::vector<std::vector<int>> currentBoard(struct Node** head, int move) {
+	struct Node* current = *head;
+	while (current->move >= move || current->next != NULL) {
+		if (current->move == move) return current->data;
+		current = current->next;
+	}
+}
+
+// Get number of moves stored in game state
+int sumMoves(struct Node** head) {
+	struct Node* current = *head;
+	int sum = 0;
+
+	if (*head == NULL) return sum;
+
+	while (current->next != NULL) {
+		sum++;
+		current = current->next;
+	}
+
+	return sum + 1;
 }
 
 // Prints contents of game state starting from the given node

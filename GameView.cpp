@@ -39,13 +39,16 @@ void GameView::display()
 	int cursor = 0; // used to track cursor position on board
 	int* cursorPtr = &cursor;
 	do {
+		int numMovesStored = sumMoves(&gameState);
 		system("cls");
 
-		std::cout << "Game State: " << std::endl;
-		displayList(gameState);
-		std::cout << "" << std::endl;
-		std::cout << "Move ";
-		std::cout << move << std::endl;
+		// Get current board from game state
+		if (move == 1) {
+			board = hint;
+		}
+		else {
+			board = currentBoard(&gameState, move-1);
+		}
 
 		// Difficulty banner
 		switch (diff) {
@@ -144,8 +147,7 @@ void GameView::display()
 		if (key >= 49 && key <= 57) {
 			bool result = EnterNumber(boardPtr, flatHint, cursor, key);
 			if (result) { 
-				insert(&gameState, move);
-				
+				insert(&gameState, move, board);				
 				move++;
 			}
 		}
@@ -158,8 +160,8 @@ void GameView::display()
 				move--;
 			}
 			// Redo [arrow-right]
-			if (key == 333) {
-
+			if (key == 333 && move <= numMovesStored) {
+				move++;
 			}
 		}
 	} while (true);
