@@ -9,6 +9,8 @@
 #include "sudokuSolver.h"
 #include "color.h"
 #include "gameState.h"
+#include "gameHistory.h"
+#include "hideCursor.h"
 
 #pragma once
 class GameView
@@ -16,8 +18,9 @@ class GameView
 	public:
 		GameView(); // Constructor
 		~GameView(); // Destructor
-		void display();
+		int display(int difficulty, bool newPuzzle, string filename);
 
+		bool checkGame(std::vector<std::vector<int>>& complete);
 		// Keyboard input
 		bool ValidWASD(int& newPosition);
 		void W(int*);

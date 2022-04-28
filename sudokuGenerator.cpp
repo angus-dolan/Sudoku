@@ -12,17 +12,132 @@ SudokuGenerator::~SudokuGenerator()
 	;
 }
 
-//std::vector<std::vector<int>> SudokuGenerator::loadPuzzle()
-//{
-//	// Get from data store
-//	// Convert to flat array
-//	// Convert to vector
-//}
+std::vector<std::vector<int>> SudokuGenerator::loadPuzzle(std::string filename)
+{
+	std::vector<std::vector<int>> complete;
+	std::vector<int> flat;
+
+	filename = "saved/" + filename + ".txt";
+	ifstream input(filename);
+
+	string line;
+	int i = 0;
+	while (getline(input, line))
+	{
+		if (i == 2) {
+			flat = split(line, ",");
+		}
+		i++;
+	}
+	input.close();
+
+	complete = flatBoardToVector(flat);
+
+	return complete;
+}
+
+std::vector<std::vector<int>> SudokuGenerator::loadHint(std::string filename)
+{
+	std::vector<std::vector<int>> hint;
+	std::vector<int> flat;
+
+	filename = "saved/" + filename + ".txt";
+	ifstream input(filename);
+
+	string line;
+	int i = 0;
+	while (getline(input, line))
+	{
+		if (i == 4) {
+			flat = split(line, ",");
+		}
+		i++;
+	}
+	input.close();
+
+	hint = flatBoardToVector(flat);
+
+	return hint;
+}
+
+void SudokuGenerator::loadGameState(struct Node** gameState, std::string filename) {
+	filename = "saved/" + filename + ".txt";
+	ifstream input(filename);
+
+	string line;
+	int i = 0;
+	bool flag = false;
+	int token = 0;
+
+	int temp_move;
+	std::vector<std::vector<int>> temp_data;
+	std::vector<int> temp_data_flat;
+
+
+	while (getline(input, line))
+	{
+		if (i == 6) flag = true;
+		if (flag) { if (line.compare("-") == 0) { flag = false; } }
+
+		if (flag) {
+			// Move
+			if (token == 0) temp_move = stoi(line);
+			// Data
+			if (token == 1) {
+				temp_data_flat = split(line, ",");
+				temp_data = flatBoardToVector(temp_data_flat);
+			}
+
+			token++;
+			if (token == 3) {
+				// Insert into game state
+				insert(gameState, temp_move, temp_data);
+				token = 0;
+			}
+		}
+		i++;
+	}
+	input.close();
+}
+
+vector<int> SudokuGenerator::split(string s, string delimiter) {
+	size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+	string token;
+	vector<int> res;
+
+	while ((pos_end = s.find(delimiter, pos_start)) != string::npos) {
+		token = s.substr(pos_start, pos_end - pos_start);
+		pos_start = pos_end + delim_len;
+		res.push_back(stoi(token));
+	}
+
+	res.push_back(stoi(s.substr(pos_start)));
+	return res;
+}
+
+
+int SudokuGenerator::loadDifficulty(std::string filename)
+{
+	filename = "saved/" + filename + ".txt";
+	ifstream input(filename);
+
+	string line;
+	int i = 0;
+	while (getline(input, line))
+	{
+		if (i == 0) {
+			stringstream stream(line);
+			return stoi(line);
+		}
+	}
+
+	input.close();
+}
 
 std::vector<std::vector<int>> SudokuGenerator::createNew()
 {
 	// Start with default board
-	std::array<int, 81> const defaultFlatBoard = {1,2,3,4,5,6,7,8,9,4,5,6,7,8,9,1,2,3,7,8,9,1,2,3,4,5,6,2,3,4,5,6,7,8,9,1,5,6,7,8,9,1,2,3,4,8,9,1,2,3,4,5,6,7,3,4,5,6,7,8,9,1,2,6,7,8,9,1,2,3,4,5,9,1,2,3,4,5,6,7,8};
+	std::vector<int> defaultFlatBoard = {1,2,3,4,5,6,7,8,9,4,5,6,7,8,9,1,2,3,7,8,9,1,2,3,4,5,6,2,3,4,5,6,7,8,9,1,5,6,7,8,9,1,2,3,4,8,9,1,2,3,4,5,6,7,3,4,5,6,7,8,9,1,2,6,7,8,9,1,2,3,4,5,9,1,2,3,4,5,6,7,8};
 	std::vector<std::vector<int>> defaultBoard = flatBoardToVector(defaultFlatBoard);
 
 	// Shuffle groups

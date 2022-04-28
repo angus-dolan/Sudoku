@@ -69,7 +69,7 @@ bool solveBackTrack(std::vector<std::vector<int>>& board)
     return false;
 }
 
-std::vector<std::vector<int>> flatBoardToVector(std::array<int, 81> const flat_board)
+std::vector<std::vector<int>> flatBoardToVector(std::vector<int> flat_board)
 {
     std::vector<std::vector<int>> board;
     board.reserve(9);

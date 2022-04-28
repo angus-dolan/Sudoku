@@ -10,21 +10,25 @@ GameView::~GameView()
 	
 }
 
-void GameView::display()
+int GameView::display(int difficulty, bool newPuzzle, string filename  )
 {
-	int diff = 1;
-	bool newPuzzle = true;
+	// IO for saving game history
+	GameHistory* gameHistory = new GameHistory();
 
-	SudokuGenerator* generator = new SudokuGenerator(diff);
+	SudokuGenerator* generator = new SudokuGenerator(difficulty);
 	std::vector<std::vector<int>> complete, hint, board;
 
 	// Complete = fully solved puzzle
 	if (newPuzzle) complete = generator->createNew();
-	//else complete = generator->loadPuzzle();
+	else complete = generator->loadPuzzle("new");
+
+	// Difficulty
+	if(!newPuzzle) difficulty = generator->loadDifficulty("new");
 
 	// Hint = what's initially displayed to user
 	// Difficultly is dictated by how many cells are filled in
-	hint = generator->createHint(complete);
+	if (newPuzzle) hint = generator->createHint(complete);
+	else hint = generator->loadHint("new");
 	std::vector<int> flatHint = vectorToFlatBoard(hint);
 
 	// Board = what user plays with, initialized with hint state
@@ -33,7 +37,19 @@ void GameView::display()
 
 	// Game state
 	struct Node* gameState = NULL;
+	if (!newPuzzle) generator->loadGameState(&gameState, "new");
+
 	int move = 1;
+
+	// FOR DEMO!!
+	ofstream output("saved/SOLUTION.txt");
+	for (int row = 0; row < 9; row++) {
+		for (int col = 0; col < 9; col++) {
+			output << complete[row][col];
+		}
+		output << endl;
+	}
+	output.close();
 
 	// Display UI and look for keyboard input
 	int cursor = 0; // used to track cursor position on board
@@ -51,7 +67,7 @@ void GameView::display()
 		}
 
 		// Difficulty banner
-		switch (diff) {
+		switch (difficulty) {
 		case 1:
 			ui::headerText(" EASY ");
 			break;
@@ -130,6 +146,64 @@ void GameView::display()
 			}
 		}
 
+		// Correct count (easy)
+		if (difficulty == 1) {
+			int correctCount = 0;
+			for (int row = 0; row < 9; ++row)
+			{
+				for (int col = 0; col < 9; ++col)
+				{
+					if (hint[row][col] == 0) {
+						if (board[row][col] == complete[row][col]) correctCount++;
+					}
+				}
+			}
+			color(10);
+			std::cout << " Correct: ";
+			color(15);
+			std::cout << correctCount;
+			std::cout << "/81";
+		}
+		else {
+			std::cout << "               ";
+		}
+
+		// Move count
+		color(11);
+		std::cout << "                ";
+		std::cout << "Move: ";
+		color(15);
+		std::cout << move << std::endl;
+		std::cout << std::endl;
+
+		color(8);
+		std::cout << " Controls:" << std::endl;
+		std::cout << std::endl;
+		color(15);
+
+		// WASD
+		color(12);
+		std::cout << " [WASD]";
+		color(15);
+		std::cout << " keys to move cursor" << std::endl;
+
+		// Arrow Keys
+		color(12);
+		std::cout << " [arrow-left]";
+		color(15);
+		std::cout << " to UNDO a move" << std::endl;		
+		color(12);
+		std::cout << " [arrow-right]";
+		color(15);
+		std::cout << " to REDO a move" << std::endl;
+
+		// ESC
+		color(12);
+		std::cout << " [ESC]";
+		color(15);
+		std::cout << " to QUIT game" << std::endl;
+		color(15);
+
 		// Keyboard controls
 		int key = 0;
 		key = _getch();
@@ -164,7 +238,71 @@ void GameView::display()
 				move++;
 			}
 		}
+
+		// Escape key
+		if (key == 27 || key == 112) {
+			return 0;
+		}
+
+		// Check game
+		bool gameFinished = checkGame(board);
+		if (move == 81) gameFinished = true;
+		if (gameFinished) {
+			bool result = checkBoard(board);
+			system("cls");
+			hideCursor(false);
+
+			ui::header();
+			if (!result) {
+				color(12);
+				cout << endl;
+				cout << " Sorry, you did not complete" << endl
+					<< " the sudoku puzzle." << endl;
+				color(14);
+				cout << endl;
+				cout << " Save the game and replay!" << endl;
+				cout << endl;
+				color(15);
+			}
+			else if (result) {
+				color(10);
+				cout << endl;
+				cout << " Congratulations! you completed" << endl
+					<< " the sudoku puzzle." << endl;
+				color(14);
+				cout << endl;
+				cout << " Save the game and replay!" << endl;
+				cout << endl;
+				color(15);
+			}
+
+			ui::footerText("Enter a save file name:");
+			cout << endl;
+
+			string filename;
+			std::getline(cin, filename);
+
+			gameHistory->createNew(filename, difficulty, complete, hint, &gameState);
+
+			hideCursor(true);
+			return 0;
+		}
+
 	} while (true);
+}
+
+bool GameView::checkGame(std::vector<std::vector<int>>& complete)
+{
+	int filled = 0;
+
+	for (int row = 0; row < 9; row++) {
+		for (int col = 0; col < 9; col++) {
+			if (complete[row][col] != 0) filled++;
+		}
+	}
+
+	if (filled == 81) return true;
+	else return false;
 }
 
 bool GameView::ValidWASD(int& newPosition)

@@ -19,7 +19,7 @@ bool checkBoard(std::vector<std::vector<int>>& board);
 bool solveBackTrack(std::vector<std::vector<int>>& board);
 
 // Helper function to convert flat array to vector to be used in algorithm
-std::vector<std::vector<int>> flatBoardToVector(std::array<int, 81> const flat_board);
+std::vector<std::vector<int>> flatBoardToVector(std::vector<int> flat_board);
 // Helper function to convert vector board to flat array
 std::vector<int> vectorToFlatBoard(std::vector<std::vector<int>> const vectorBoard);
 
